@@ -1,4 +1,8 @@
-html,
+html {
+  --space: clamp(10px, 2vw, 20px);
+  --bgColor: white; 
+}
+
 body {
   padding: 0;
   margin: 0;
@@ -6,21 +10,103 @@ body {
     Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
 * {
   box-sizing: border-box;
 }
 
+main {
+  margin: var(--space);
+}
+
+/* using global styles during prototyping,
+ * TODO: figure out final components and move styles to Scss modules accordingly
+ */
+.results {
+  margin: var(--space) 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 110px);
+  grid-auto-rows: 145px;
+  gap: calc(var(--space) / 2);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border: 1px solid #da23;
+  border-radius: 4px;
+  padding: calc(var(--space) / 2);
+  font-size: 0.75rem;
+  cursor: pointer;
+  background: var(--bgColor);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 100ms, transform 300ms;
+}
+
+.card:hover,
+.card:focus {
+  border-color: goldenrod;
+  transform: scale(1.1);
+  z-index: 1;
+}
+
+.card > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.card > div > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.card img {
+  max-height: 110px;
+  object-fit: contain;
+  transition: transform 300ms;
+  transform-origin: bottom center;
+}
+
+.card:hover img,
+.card:focus img {
+  transition: transform 300ms cubic-bezier(.6, .4, .7, 1.5);
+  transform: scale(1.2);
+}
+
+.card small {
+  font-size: 0.6rem;
+}
+
+.card .alignTop {
+  margin: calc(-1 * var(--space)) 0 auto;
+}
+
+.card button.invisible {
+  background: transparent;
+  border: none;
+  display: block;
+  cursor: cell;
+}
+
+.card button {
+  transition: transform 200ms;
+}
+
+.card button:hover,
+.card button:focus {
+  transform: scale(2);
+}
+
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
+    --bgColor: #222;
   }
   body {
     color: white;
-    background: black;
+    background: var(--bgColor);
   }
 }
